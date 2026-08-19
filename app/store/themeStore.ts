@@ -1,4 +1,3 @@
-// store/themeStore.ts
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
@@ -10,14 +9,16 @@ interface ThemeStore {
 
 export const useThemeStore = create<ThemeStore>()(
   persist(
-    (set: any) => ({
-      theme: "light", // default dark
+    (set) => ({
+      theme: "light",
       toggleTheme: () =>
-        set((state: any) => ({
+        set((state) => ({
           theme: state.theme === "dark" ? "light" : "dark",
         })),
-      setTheme: (theme: any) => set({ theme }),
+      setTheme: (theme) => set({ theme }),
     }),
-    { name: "portfolio-theme" },
-  ),
+    {
+      name: "salon-theme",
+    }
+  )
 );
