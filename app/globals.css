@@ -6,7 +6,7 @@
   --font-sans: "Inter", system-ui, -apple-system, sans-serif;
   --font-serif: Georgia, "Times New Roman", serif;
 
-  /* Colors – apne hisaab se change karo */
+  /* Primary Colors – Rose */
   --color-rose-50: #fce4ec;
   --color-rose-100: #f8bbd0;
   --color-rose-200: #f48fb1;
@@ -18,12 +18,20 @@
   --color-rose-800: #880e4f;
   --color-rose-900: #6a1b4d;
 
+  /* Neutral / Slate */
+  --color-slate-50: #f8fafc;
+  --color-slate-100: #f1f5f9;
+  --color-slate-200: #e2e8f0;
+  --color-slate-300: #cbd5e1;
+  --color-slate-400: #94a3b8;
+  --color-slate-500: #64748b;
+  --color-slate-600: #475569;
+  --color-slate-700: #334155;
+  --color-slate-800: #1e293b;
+  --color-slate-900: #0f172a;
+
   --color-primary: var(--color-rose-500);
   --color-primary-dark: var(--color-rose-600);
-
-  /* Breakpoints (optional) */
-  --breakpoint-xs: 30rem;
-  --breakpoint-2xl: 96rem;
 }
 
 /* ========== BASE STYLES ========== */
@@ -39,6 +47,7 @@
     background-color: #fafafa;
     color: #1a1a1a;
     line-height: 1.6;
+    transition: background-color 0.3s, color 0.3s;
   }
 
   a {
@@ -46,26 +55,159 @@
     text-decoration: none;
   }
 
-  /* Smooth scroll */
   html {
     scroll-behavior: smooth;
   }
+
+  /* Scrollbar hide */
+  *::-webkit-scrollbar {
+    display: none;
+  }
+  ::-webkit-scrollbar {
+    width: 0;
+  }
 }
 
-/* ========== UTILITY OVERRIDES (optional) ========== */
+/* ========== UTILITY OVERRIDES ========== */
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
 }
 
-/* remove slidebar from browser of web */
-*::-webkit-scrollbar {
-  display: none;
+/* ========== THEME TOGGLE VIEW TRANSITION ========== */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.8s;
+  animation-timing-function: ease-in-out;
+  mix-blend-mode: normal;
 }
 
-/* microsoft safari and etc..*/
+::view-transition-new(root) {
+  clip-path: circle(0% at top right);
+  animation-name: theme-reveal;
+  z-index: 9999;
+}
 
-::-webkit-scrollbar{
-  width: 0;
+::view-transition-old(root) {
+  animation: none;
+  z-index: 1;
+}
+
+@keyframes theme-reveal {
+  to {
+    clip-path: circle(150% at top right);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none;
+  }
+}
+
+/* ========== DARK MODE OVERRIDES ========== */
+.dark body {
+  background-color: #0a0a0a;
+  color: #e5e5e5;
+}
+
+/* General backgrounds */
+.dark .bg-white {
+  background-color: #1e1e1e;
+}
+.dark .bg-gray-50 {
+  background-color: #141414;
+}
+.dark .bg-gray-100 {
+  background-color: #1a1a1a;
+}
+.dark .bg-slate-50 {
+  background-color: #141414;
+}
+.dark .bg-slate-100 {
+  background-color: #1a1a1a;
+}
+.dark .bg-rose-50 {
+  background-color: #2a1a1f;
+}
+
+/* Text */
+.dark .text-gray-900,
+.dark .text-slate-900 {
+  color: #f1f1f1;
+}
+.dark .text-gray-800,
+.dark .text-slate-800 {
+  color: #e0e0e0;
+}
+.dark .text-gray-700,
+.dark .text-slate-700 {
+  color: #c0c0c0;
+}
+.dark .text-gray-600,
+.dark .text-slate-600 {
+  color: #a0a0a0;
+}
+.dark .text-gray-500,
+.dark .text-slate-500 {
+  color: #888888;
+}
+.dark .text-gray-400,
+.dark .text-slate-400 {
+  color: #6b6b6b;
+}
+
+/* Borders */
+.dark .border,
+.dark .border-gray-200,
+.dark .border-slate-200 {
+  border-color: #2a2a2a;
+}
+.dark .border-gray-300,
+.dark .border-slate-300 {
+  border-color: #3a3a3a;
+}
+
+/* Shadows */
+.dark .shadow-sm {
+  box-shadow: 0 1px 2px rgba(255, 255, 255, 0.05);
+}
+.dark .shadow-md {
+  box-shadow: 0 4px 6px -1px rgba(255, 255, 255, 0.05);
+}
+.dark .shadow-lg {
+  box-shadow: 0 10px 15px -3px rgba(255, 255, 255, 0.05);
+}
+.dark .shadow-xl {
+  box-shadow: 0 20px 25px -5px rgba(255, 255, 255, 0.05);
+}
+
+/* Card hover */
+.dark .hover\:shadow-xl:hover {
+  box-shadow: 0 20px 25px -5px rgba(255, 255, 255, 0.08);
+}
+
+/* Form inputs */
+.dark input,
+.dark textarea,
+.dark select {
+  background-color: #1e1e1e;
+  border-color: #2a2a2a;
+  color: #f1f1f1;
+}
+.dark input:focus,
+.dark textarea:focus,
+.dark select:focus {
+  border-color: var(--color-rose-500);
+  ring-color: var(--color-rose-500);
+}
+
+/* Navbar specific */
+.dark .bg-white\/90 {
+  background-color: rgba(20, 20, 20, 0.9);
+}
+.dark .backdrop-blur-md {
+  backdrop-filter: blur(12px);
 }
